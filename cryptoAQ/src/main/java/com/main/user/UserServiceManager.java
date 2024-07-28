@@ -22,7 +22,7 @@ public class UserServiceManager {
 		this.userTransactionEntityDAO = userTransactionEntityDAO;
 	}
 
-	public List<UserWalletEntity> getWalletBalance(Long userid) {
+	public List<UserWalletEntity> retrieveWalletBalance(Long userid) {
 
 		return this.userWalletDAO.findByUserid(userid);
 	}
@@ -37,8 +37,7 @@ public class UserServiceManager {
 	}
 
 	public List<UserWalletEntity> sell(Long userid) {
-
-		return this.getWalletBalance(userid);
+		return this.retrieveWalletBalance(userid);
 	}
 
 	public UserServiceManager() {

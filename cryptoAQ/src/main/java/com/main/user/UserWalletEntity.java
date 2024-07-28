@@ -16,7 +16,6 @@ import jakarta.persistence.Table;
 public class UserWalletEntity {
 
 	@Id
-
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "WALLET_ID")
 	private Long walletId;

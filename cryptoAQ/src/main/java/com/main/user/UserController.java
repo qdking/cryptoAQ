@@ -20,7 +20,7 @@ public class UserController {
 
 	@GetMapping("api/wallet")
 	public List<UserWalletEntity> getWalletBalance(@RequestParam Long userid) {
-		return userServiceManager.getWalletBalance(userid);
+		return userServiceManager.retrieveWalletBalance(userid);
 	}
 
 	@GetMapping("api/transactions")

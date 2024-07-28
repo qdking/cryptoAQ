@@ -3,10 +3,12 @@ package com.main.cryptocurrency;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -26,6 +28,7 @@ public class CryptoCurrencyManagerService {
 	private IBestCryptoPriceSnapshotDAO cryptoCurrencyDAO;
 
 	private RestTemplate restTemplate;
+	private Logger logger;
 
 	@Autowired
 	public CryptoCurrencyManagerService(IBestCryptoPriceSnapshotDAO cryptoCurrencyDAO, RestTemplate restTemplate) {
@@ -51,10 +54,16 @@ public class CryptoCurrencyManagerService {
 	}
 
 	private List<Map<String, String>> retrieveBinancePrices() {
-		ResponseEntity<List<Map<String, String>>> response = restTemplate.exchange(Constants.BINANCE_URL,
-				HttpMethod.GET, null, new ParameterizedTypeReference<List<Map<String, String>>>() {
-				});
-		return response.getBody();
+		try {
+			ResponseEntity<List<Map<String, String>>> response = restTemplate.exchange(Constants.BINANCE_URL,
+					HttpMethod.GET, null, new ParameterizedTypeReference<List<Map<String, String>>>() {
+					});
+			return response.getBody();
+		} catch (Exception e) {
+			logger.info("Error fetching prices From Binance: " + e.getMessage());
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
 	}
 
 	private Map<String, Map<String, String>> retrieveHuobiPrices() {
@@ -95,8 +104,30 @@ public class CryptoCurrencyManagerService {
 
 		if (huobiPrices.containsKey(currencySymbol)) {
 			Map<String, String> huobiPrice = huobiPrices.get(currencySymbol);
-			BigDecimal huobiBidPrice = new BigDecimal(huobiPrice.get(Constants.HUOBI_JSON_BID_KEY));
-			BigDecimal huobiAskPrice = new BigDecimal(huobiPrice.get(Constants.HUOBI_JSON_ASK_KEY));
+
+			Object huobiBidValue = huobiPrice.get(Constants.HUOBI_JSON_BID_KEY);
+			Object huobiAskValue = huobiPrice.get(Constants.HUOBI_JSON_ASK_KEY);
+			BigDecimal huobiBidPrice;
+			BigDecimal huobiAskPrice;
+
+			if (huobiBidValue instanceof String s) {
+				huobiBidPrice = new BigDecimal(s);
+			} else if (huobiBidValue instanceof Double dbl) {
+				huobiBidPrice = BigDecimal.valueOf(dbl);
+			} else {
+				throw new IllegalArgumentException(
+						"Unexpected type for HUOBI bid price: " + huobiBidValue.getClass().getName());
+			}
+
+			if (huobiAskValue instanceof String s) {
+				huobiAskPrice = new BigDecimal(s);
+			} else if (huobiAskValue instanceof Double dbl) {
+				huobiAskPrice = BigDecimal.valueOf(dbl);
+			} else {
+				throw new IllegalArgumentException(
+						"Unexpected type for HUOBI ask price: " + huobiAskValue.getClass().getName());
+			}
+
 			if (huobiBidPrice.compareTo(bestBidPrice) > 0) {
 				bestBidPrice = huobiBidPrice;
 				bestBidSource = Constants.HUOBI;

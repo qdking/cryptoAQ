@@ -16,13 +16,7 @@ import jakarta.persistence.Table;
 public class UserWalletEntity {
 
 	@Id
-	/*
-	 * @SequenceGenerator(name = "wallet_sequence", sequenceName =
-	 * "wallet_sequence", allocationSize = 1)
-	 * 
-	 * @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-	 * "wallet_sequence")
-	 */
+
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "WALLET_ID")
 	private Long walletId;

@@ -46,14 +46,14 @@ class TestCryptoCurrencyManagerService {
 		List<Map<String, String>> binanceResponse = new ArrayList<>();
 		Map<String, String> ethBinance = new HashMap<>();
 		ethBinance.put(Constants.SYMBOL, "ETHUSDT");
-		ethBinance.put("bidPrice", "2000.00");
-		ethBinance.put("askPrice", "2005.00");
+		ethBinance.put(Constants.BINANCE_JSON_BID_KEY, "2000.00");
+		ethBinance.put(Constants.BINANCE_JSON_ASK_KEY, "2005.00");
 		binanceResponse.add(ethBinance);
 
 		Map<String, String> btcBinance = new HashMap<>();
 		btcBinance.put(Constants.SYMBOL, "BTCUSDT");
-		btcBinance.put("bidPrice", "30000.00");
-		btcBinance.put("askPrice", "30010.00");
+		btcBinance.put(Constants.BINANCE_JSON_BID_KEY, "30000.00");
+		btcBinance.put(Constants.BINANCE_JSON_ASK_KEY, "30010.00");
 		binanceResponse.add(btcBinance);
 
 		Mockito.when(restTemplate.exchange(eq("https://api.binance.com/api/v3/ticker/bookTicker"), eq(HttpMethod.GET),
@@ -64,14 +64,14 @@ class TestCryptoCurrencyManagerService {
 		List<Map<String, String>> huobiData = new ArrayList<>();
 		Map<String, String> ethHuobi = new HashMap<>();
 		ethHuobi.put(Constants.SYMBOL, "ethusdt");
-		ethHuobi.put("bid", "2001.00");
-		ethHuobi.put("ask", "2004.00");
+		ethHuobi.put(Constants.HUOBI_JSON_BID_KEY, "2001.00");
+		ethHuobi.put(Constants.HUOBI_JSON_ASK_KEY, "2004.00");
 		huobiData.add(ethHuobi);
 
 		Map<String, String> btcHuobi = new HashMap<>();
 		btcHuobi.put(Constants.SYMBOL, "btcusdt");
-		btcHuobi.put("bid", "29950.00");
-		btcHuobi.put("ask", "30005.00");
+		btcHuobi.put(Constants.HUOBI_JSON_BID_KEY, "29950.00");
+		btcHuobi.put(Constants.HUOBI_JSON_ASK_KEY, "30005.00");
 		huobiData.add(btcHuobi);
 
 		huobiResponse.put("data", huobiData);

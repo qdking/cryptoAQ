@@ -16,6 +16,7 @@ public class BestCyptoPriceSnapshotEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "SNAPSHOT_ID", nullable = false)
 	private Long id;
 
 	@Column(name = "CURRENCY_PAIR", nullable = false)

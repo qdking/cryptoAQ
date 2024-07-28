@@ -6,7 +6,9 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +27,17 @@ public class CryptoCurrencyManagerService {
 
 	private RestTemplate restTemplate;
 
+	@Autowired
 	public CryptoCurrencyManagerService(IBestCryptoPriceSnapshotDAO cryptoCurrencyDAO, RestTemplate restTemplate) {
 		super();
 		this.cryptoCurrencyDAO = cryptoCurrencyDAO;
 		this.restTemplate = restTemplate;
+	}
+
+	public Optional<BestCyptoPriceSnapshotEntity> retrieveBestCryptoPriceSnapshot(String currencyPair) {
+		List<BestCyptoPriceSnapshotEntity> snapshotList = this.cryptoCurrencyDAO
+				.findByCurrencyPairOrderByCreOnDesc(currencyPair);
+		return snapshotList.isEmpty() ? Optional.empty() : Optional.of(snapshotList.get(0));
 	}
 
 	@Scheduled(fixedRate = 10000)

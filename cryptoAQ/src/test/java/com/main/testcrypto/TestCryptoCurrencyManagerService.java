@@ -41,7 +41,7 @@ class TestCryptoCurrencyManagerService {
 	private RestTemplate restTemplate;
 
 	@Test
-	void testFetchAndStorePrices() {
+	void testAggregateBestPrices() {
 
 		List<Map<String, String>> binanceResponse = new ArrayList<>();
 		Map<String, String> ethBinance = new HashMap<>();
@@ -56,8 +56,8 @@ class TestCryptoCurrencyManagerService {
 		btcBinance.put(Constants.BINANCE_JSON_ASK_KEY, "30010.00");
 		binanceResponse.add(btcBinance);
 
-		Mockito.when(restTemplate.exchange(eq("https://api.binance.com/api/v3/ticker/bookTicker"), eq(HttpMethod.GET),
-				any(), eq(new ParameterizedTypeReference<List<Map<String, String>>>() {
+		Mockito.when(restTemplate.exchange(eq(Constants.BINANCE_URL), eq(HttpMethod.GET), any(),
+				eq(new ParameterizedTypeReference<List<Map<String, String>>>() {
 				}))).thenReturn(new ResponseEntity<>(binanceResponse, HttpStatus.OK));
 
 		Map<String, Object> huobiResponse = new HashMap<>();
@@ -76,7 +76,7 @@ class TestCryptoCurrencyManagerService {
 
 		huobiResponse.put("data", huobiData);
 
-		Mockito.when(restTemplate.getForEntity(eq("https://api.huobi.pro/market/tickers"), eq(Map.class)))
+		Mockito.when(restTemplate.getForEntity(eq(Constants.HUOBI_URL), eq(Map.class)))
 				.thenReturn(new ResponseEntity<>(huobiResponse, HttpStatus.OK));
 
 		// Execute the method

@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface IUserWalletDAO extends JpaRepository<UserWalletEntity, Long> {
 
 	List<UserWalletEntity> findByUserid(Long userId);
+
+	UserWalletEntity findByUseridAndCurrency(Long userId, String currency);
 }

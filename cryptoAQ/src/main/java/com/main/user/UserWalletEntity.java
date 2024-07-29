@@ -87,6 +87,13 @@ public class UserWalletEntity {
 		this.updOn = updOn;
 	}
 
+	public UserWalletEntity(Long userid, String currency, BigDecimal qtyBalance) {
+		super();
+		this.userid = userid;
+		this.currency = currency;
+		this.qtyBalance = qtyBalance;
+	}
+
 	public UserWalletEntity(Long userid, String currency, BigDecimal qtyBalance, Timestamp creOn, Timestamp updOn) {
 		super();
 		this.userid = userid;

@@ -6,6 +6,7 @@ public interface Constants {
 	String SYMBOL = "symbol";
 	String ETHEREUM_SYMBOL = "ETH";
 	String BITCOIN_SYMBOL = "BTC";
+	String USDTETHER_SYMBOL = "USDT";
 	String ETHUSTD_PAIR = "ETHUSDT";
 	String BTCUSTD_PAIR = "BTCUSDT";
 	String BINANCE = "BINANCE";

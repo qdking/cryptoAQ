@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import com.main.common.Constants;
 import com.main.user.IUserDAO;
 import com.main.user.IUserWalletDAO;
 import com.main.user.UserEntity;
@@ -29,7 +30,7 @@ class TestUserWalletDAO {
 	private final static Long TESTUSERID = 2000L;
 
 	@Test
-	void testFindWalletByUserid() {
+	void testUserWalletDAO() {
 
 		UserEntity testUser = new UserEntity(TESTUSERID, "testUser", "hashedpassword",
 				Timestamp.valueOf(LocalDateTime.now()));
@@ -71,6 +72,11 @@ class TestUserWalletDAO {
 				.filter(e -> "ETH".equals(e.getCurrency())).toList();
 		assertThat(ethList).isNotNull().size().isEqualTo(1);
 		assertThat(ethList.get(0).getQtyBalance()).isEqualTo(BigDecimal.valueOf(0));
+
+		UserWalletEntity ethFindByIdAndCurrency = this.userWalletDAO.findByUseridAndCurrency(TESTUSERID,
+				Constants.ETHEREUM_SYMBOL);
+		assertThat(ethFindByIdAndCurrency).isNotNull();
+		assertThat(ethFindByIdAndCurrency.getQtyBalance()).isEqualTo(BigDecimal.valueOf(0));
 
 	}
 }

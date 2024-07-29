@@ -120,4 +120,8 @@ public class UserTransactionEntity {
 		this.userid = userid;
 	}
 
+	public UserTransactionEntity() {
+		super();
+	}
+
 }

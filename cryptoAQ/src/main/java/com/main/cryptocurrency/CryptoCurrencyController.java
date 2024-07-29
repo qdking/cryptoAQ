@@ -19,7 +19,7 @@ public class CryptoCurrencyController {
 	}
 
 	@GetMapping("api/latestprice")
-	public Optional<BestCyptoPriceSnapshotEntity> getWalletBalance(@RequestParam String currencyPair) {
+	public Optional<BestCyptoPriceSnapshotEntity> getLatestCryptoAggregatePrice(@RequestParam String currencyPair) {
 		return cryptoCurrencyManagerService.retrieveBestCryptoPriceSnapshot(currencyPair);
 	}
 

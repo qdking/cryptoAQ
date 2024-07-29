@@ -3,7 +3,7 @@ package com.main.cryptocurrency;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +62,7 @@ public class CryptoCurrencyManagerService {
 		} catch (Exception e) {
 			logger.info("Error fetching prices From Binance: " + e.getMessage());
 			e.printStackTrace();
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 	}
 

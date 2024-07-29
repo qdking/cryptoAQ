@@ -72,8 +72,8 @@ class TestUserTransactionDAO {
 		userTransactionEntityDAO.save(transactionObject);
 		userTransactionEntityDAO.save(transactionObject2);
 
-		List<UserTransactionEntity> list = userTransactionEntityDAO.findByUserid(TESTUSERID);
-		List<UserTransactionEntity> list2 = userTransactionEntityDAO.findByUserid(TESTUSERID2);
+		List<UserTransactionEntity> list = userTransactionEntityDAO.findByUseridOrderByCreOnDesc(TESTUSERID);
+		List<UserTransactionEntity> list2 = userTransactionEntityDAO.findByUseridOrderByCreOnDesc(TESTUSERID);
 
 		assertThat(list).isNotNull().size().isEqualTo(1);
 		assertThat(list.get(0).getCurrencyBought()).isEqualTo("ETH");

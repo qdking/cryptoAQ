@@ -97,6 +97,11 @@ public class BestCyptoPriceSnapshotEntity {
 		super();
 	}
 
+	public BestCyptoPriceSnapshotEntity(String currencyPair) {
+		super();
+		this.currencyPair = currencyPair;
+	}
+
 	public BestCyptoPriceSnapshotEntity(Long id, String currencyPair, BigDecimal bidPrice, BigDecimal askPrice,
 			Timestamp creOn) {
 		super();
